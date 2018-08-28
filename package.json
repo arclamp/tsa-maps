@@ -1,0 +1,40 @@
+{
+  "name": "tsa-maps",
+  "version": "1.0.0",
+  "description": "Mapping TSA data for Reddit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --mode development",
+    "watch": "npm run build -- --watch",
+    "start": "http-server dist/"
+  },
+  "babel": {
+    "presets": [
+      "@babel/env"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arclamp/tsa-maps.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/arclamp/tsa-maps/issues"
+  },
+  "homepage": "https://github.com/arclamp/tsa-maps#readme",
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.0",
+    "geojs": "^0.17.0",
+    "html-webpack-plugin": "^3.2.0",
+    "http-server": "^0.11.1",
+    "pug": "^2.0.3",
+    "pug-loader": "^2.4.0",
+    "webpack": "^4.17.1",
+    "webpack-cli": "^3.1.0"
+  }
+}
