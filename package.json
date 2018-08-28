@@ -1,0 +1,19 @@
+{
+  "name": "tsa-maps",
+  "version": "1.0.0",
+  "description": "Mapping TSA data for Reddit",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arclamp/tsa-maps.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/arclamp/tsa-maps/issues"
+  },
+  "homepage": "https://github.com/arclamp/tsa-maps#readme"
+}
