@@ -26,6 +26,12 @@ export default {
             ]
           }
         }
+      },
+      {
+        test: /\.pug$/,
+        use: {
+          loader: 'pug-loader'
+        }
       }
     ]
   }
