@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/arclamp/tsa-maps/issues"
   },
-  "homepage": "https://github.com/arclamp/tsa-maps#readme"
+  "homepage": "https://github.com/arclamp/tsa-maps#readme",
+  "devDependencies": {
+    "geojs": "^0.17.0"
+  }
 }
