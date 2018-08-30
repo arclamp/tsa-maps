@@ -49,22 +49,26 @@ def compute_value(series):
 def aggregate(series):
     first = series[0]
 
-    agg = {'Airport Name': first['Airport Name'],
-           'Airport Code': first['Airport Code'],
-           'lat': first['lat'],
-           'lon': first['lon'],
-           'counts': {},
+    airport = {'Airport Name': first['Airport Name'],
+               'Airport Code': first['Airport Code'],
+               'lat': float(first['lat']),
+               'lon': float(first['lon'])}
+
+    agg = {'counts': {},
            'values': {}}
 
     faceted = facet(series, lambda x: x['Disposition'])
 
+    total_count = 0
     for k in faceted:
         kk = k if k != '-' else 'Open'
 
         agg['counts'][kk] = len(faceted[k])
         agg['values'][kk] = compute_value(faceted[k])
 
-    return agg
+        total_count += len(faceted[k])
+
+    return (agg, total_count, airport)
 
 def csv2dict(filename):
     with open(filename) as f:
@@ -92,8 +96,14 @@ def main():
     facet2 = {k: facet(v, lambda x: '/'.join(x['Incident Date'].split('/')[:2])) for k, v in facet1.iteritems()}
 
     for k in facet2:
+        total = 0
         for kk in facet2[k]:
-            facet2[k][kk] = aggregate(facet2[k][kk])
+            agg, count, airport = aggregate(facet2[k][kk])
+
+            total += count
+            facet2[k][kk] = agg
+        facet2[k]['total'] = total
+        facet2[k]['airport'] = airport
 
     # print json.dumps(data, indent=2)
 
