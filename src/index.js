@@ -6,13 +6,19 @@ import data from './data.json';
 function extractPoints (data) {
   let result = [];
   Object.keys(data).forEach(k => {
-    result.push({
+    let record = {
       x: data[k].airport.lon,
       y: data[k].airport.lat,
       name: data[k].airport['Airport Name'],
       code: data[k].airport['Airport Code'],
-      total: data[k].total
-    });
+      total: data[k].total,
+      data: data[k]
+    };
+
+    delete record.data.airport;
+    delete record.data.total;
+
+    result.push(record);
   });
 
   return result;
