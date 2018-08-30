@@ -32,6 +32,10 @@ export default {
         use: {
           loader: 'pug-loader'
         }
+      },
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
       }
     ]
   }
