@@ -66,32 +66,21 @@ points.geoOn(geo.event.feature.mouseclick, evt => {
 
   selected = evt.idx;
 
-  makeChart(data[evt.data.code]);
+  console.log(evt.data);
+
+  makeChart(data[evt.data.code], evt.data.code);
 });
 
 points.draw();
 
 const ui = map.createLayer('ui');
-const legend = ui.createWidget('colorLegend', {
-  position: {
-    right: 20,
-    top: 10
-  },
-  categories: [{
-    name: 'Population',
-    type: 'discrete',
-    scale: 'linear',
-    domain: [500e3, 6e5],
-    colors: ['rgb(237,248,233)', 'rgb(186,228,179)', 'rgb(116,196,118)', 'rgb(35,139,69)']
-  }]
-});
 
 const chartWidget = ui.createWidget('svg');
 select(chartWidget.canvas())
-  .style('width', '400px')
+  .style('width', '600px')
   .style('height', '400px');
 
-function makeChart (series)  {
+function makeChart (series, code)  {
   const g = select(chartWidget.canvas());
   g.selectAll('*')
     .remove();
@@ -126,4 +115,18 @@ function makeChart (series)  {
       }
     }
   });
+
+  g.insert('rect', ':first-child')
+    .attr('x', 0)
+    .attr('y', 0)
+    .attr('width', 600)
+    .attr('height', 400)
+    .style('fill', 'white')
+    .style('opacity', 0.8);
+
+  g.append('text')
+    .attr('x', 300)
+    .attr('y', 50)
+    .style('text-anchor', 'middle')
+    .text(code);
 }
