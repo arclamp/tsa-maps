@@ -30,7 +30,11 @@ function extractPoints (data) {
 document.write(content());
 
 const map = geo.map({
-  node: '#map'
+  node: '#map',
+  center: {
+    x: -98.583333,
+    y: 39.833333
+  }
 });
 map.createLayer('osm');
 
@@ -44,8 +48,8 @@ const points = layer.createFeature('point', {
 });
 
 const pointData = extractPoints(data);
-console.log(pointData);
 
+let selected = null;
 points.style({
   radius: (d, i) => {
     const val = 5 + Math.sqrt(d.total);
@@ -56,9 +60,13 @@ points.style({
 points.data(pointData);
 
 points.geoOn(geo.event.feature.mouseclick, evt => {
-  console.log(evt);
+  if (!evt.top) {
+    return;
+  }
 
-  makeChart();
+  selected = evt.idx;
+
+  makeChart(data[evt.data.code]);
 });
 
 points.draw();
@@ -83,16 +91,30 @@ select(chartWidget.canvas())
   .style('width', '400px')
   .style('height', '400px');
 
-function makeChart ()  {
-  select(chartWidget.canvas()).selectAll('*').remove();
+function makeChart (series)  {
+  const g = select(chartWidget.canvas());
+  g.selectAll('*')
+    .remove();
+
+  let dates = Object.keys(series).sort((a, b) => a < b ? -1 : (a > b ? 1 : 0));
+
+  const approve = dates.map(v => series[v].values['Approve in Full'] || 0);
+  const deny = dates.map(v => series[v].values['Deny'] || 0);
+  const settle = dates.map(v => series[v].values['Settle'] || 0);
+  const open = dates.map(v => series[v].values['-'] || 0);
+
+  dates = dates.map(d => d.replace(/\//g, '-') + '-01');
 
   c3.generate({
-    bindto: chartWidget.canvas(),
+    bindto: g.node(),
     data: {
       x: 'x',
       columns: [
-        ['x', '2013-01-01', '2013-01-02', '2013-01-03', '2013-01-04', '2013-01-05', '2013-01-06'],
-        ['data1', 10 * Math.random(), 10 * Math.random(), 10 * Math.random(), 10 * Math.random(), 10 * Math.random(), 10 * Math.random()]
+        ['x', ...dates],
+        ['Approve', ...approve],
+        ['Deny', ...deny],
+        ['Settle', ...settle],
+        ['Open', ...open]
       ]
     },
     axis: {
