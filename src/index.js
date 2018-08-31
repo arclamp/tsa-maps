@@ -32,8 +32,8 @@ document.write(content());
 const map = geo.map({
   node: '#map',
   center: {
-    x: -98.583333,
-    y: 39.833333
+    x: -72.583333,
+    y: 49.833333
   }
 });
 map.createLayer('osm');
@@ -90,7 +90,7 @@ function makeChart (series, code)  {
   const approve = dates.map(v => series[v].values['Approve in Full'] || 0);
   const deny = dates.map(v => series[v].values['Deny'] || 0);
   const settle = dates.map(v => series[v].values['Settle'] || 0);
-  const open = dates.map(v => series[v].values['-'] || 0);
+  // const open = dates.map(v => series[v].values['-'] || 0);
 
   dates = dates.map(d => d.replace(/\//g, '-') + '-01');
 
@@ -103,14 +103,21 @@ function makeChart (series, code)  {
         ['Approve', ...approve],
         ['Deny', ...deny],
         ['Settle', ...settle],
-        ['Open', ...open]
+        // ['Open', ...open]
       ]
     },
     axis: {
       x: {
         type: 'timeseries',
         tick: {
-          format: '%Y-%m'
+          format: '%Y-%m',
+          rotate: 45
+        }
+      },
+      y: {
+        label: {
+          text: 'US Dollars',
+          position: 'outer-middle'
         }
       }
     }
