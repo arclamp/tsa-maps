@@ -78,10 +78,12 @@ const ui = map.createLayer('ui');
 const chartWidget = ui.createWidget('svg');
 select(chartWidget.canvas())
   .style('width', '600px')
-  .style('height', '400px');
+  .style('height', '400px')
+  .style('pointer-events', 'none');
 
 function makeChart (series, code)  {
   const g = select(chartWidget.canvas());
+  g.style('pointer-events', null);
   g.selectAll('*')
     .remove();
 
@@ -111,7 +113,7 @@ function makeChart (series, code)  {
         type: 'timeseries',
         tick: {
           format: '%Y-%m',
-          rotate: 45
+          rotate: 90
         }
       },
       y: {
